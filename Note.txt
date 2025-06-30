@@ -1,0 +1,18 @@
+﻿1. Dodanie nowego posiłku
+2. Usuniecie posiłku
+3. Pobranie posiłków z danego dnia
+4. Pobranie posiłków po typie
+5. Wyszukwanie po nazwie
+
+ - Posiłek ma swój typ
+
+Translate to english
+
+Śniadanie
+II Śniadanie
+Obiad
+Podwieczorek
+Kolacja
+
+// później tworzenie raportów
+// tworzenie własnych posiłków
