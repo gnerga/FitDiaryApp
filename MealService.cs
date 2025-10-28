@@ -45,7 +45,7 @@ namespace FitDiaryApp
             return new List<Meal>(meals);
         }
 
-        public List<Meal> GetMealsPerDate(DateTime date)
+        public List<Meal> GetMealsPerDate(DateOnly date)
         {
             List<Meal> mealsByDate = new List<Meal>();
 
@@ -60,7 +60,7 @@ namespace FitDiaryApp
             return mealsByDate;
         }
 
-        public List<Meal> GetMealsPerDateAndMealType(DateTime date, MealType mealType)
+        public List<Meal> GetMealsPerDateAndMealType(DateOnly date, MealType mealType)
         {
             List<Meal> mealsByDateAndType = new List<Meal>();
 
