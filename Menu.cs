@@ -17,14 +17,14 @@ namespace FitDiaryApp
             this.mealservice = mealService;
         }
 
-        
-
         public bool Run()
         {
             PrintMenu();
 
             int option = GetMenuOption();
+
             bool isProgramRunning = true;
+            Console.WriteLine();
             switch (option)
             {
                 case 1:
@@ -40,6 +40,7 @@ namespace FitDiaryApp
                     this.GetMealsByDateAndType();
                     break;
                 case 5:
+                    this.GetAllMeals();
                     break;
                 case 0:
                     isProgramRunning = false;
@@ -47,9 +48,8 @@ namespace FitDiaryApp
                 default:
                     Console.WriteLine("Invalid menu option");
                     break;
-
             }
-
+            Console.WriteLine();
             return isProgramRunning;
         }
 
@@ -78,17 +78,17 @@ namespace FitDiaryApp
 
         private MealType SelectMealType()
         {
-            Console.WriteLine("Select a meal type:");
+            Console.WriteLine("\tSelect a meal type:");
 
             // Display available options dynamically
             foreach (MealType type in Enum.GetValues(typeof(MealType)))
             {
-                Console.WriteLine($"\t{(int)type}. {type}");
+                Console.WriteLine($"\t\t{(int)type}. {type}");
             }
 
             while (true)
             {
-                Console.Write("Enter the number of your choice: ");
+                Console.Write("\tEnter the number of your choice: ");
                 string? input = Console.ReadLine();
 
                 if (int.TryParse(input, out int value) && Enum.IsDefined(typeof(MealType), value))
@@ -96,13 +96,13 @@ namespace FitDiaryApp
                     return (MealType)value;
                 }
 
-                Console.WriteLine("Invalid choice. Please enter one of the listed numbers.");
+                Console.WriteLine("\tInvalid choice. Please enter one of the listed numbers.");
             }
         }
 
         private string? GetStringValue(string inputValueName)
         {
-            Console.Write($"Enter {inputValueName}: ");
+            Console.Write($"\t{inputValueName}: ");
             return Console.ReadLine();
         }
 
@@ -128,7 +128,7 @@ namespace FitDiaryApp
 
         private double GetDoubleValue(string inputValueName)
         {
-            Console.WriteLine($"Enter {inputValueName}: ");
+            Console.WriteLine($"\t{inputValueName}: ");
             double input = -1;
 
             bool validType = false;
@@ -147,21 +147,20 @@ namespace FitDiaryApp
             return input;
         }
 
-        private DateTime GetDateTime()
+        private DateOnly GetDateTime()
         {
             DateTime dateValue = DateTime.MinValue;
 
             bool validType = false;
             while (!validType)
             {
-                Console.Write("Enter date in format yyyy-mm-dd: ");
+                Console.Write("Enter date in format dd-mm-yyyy: ");
                 string? dateInput = Console.ReadLine();
                 validType = DateTime.TryParse(dateInput, out dateValue);
             }
 
-            return dateValue;
+            return DateOnly.FromDateTime(dateValue);
         }
-
 
         private void DisplayMeals(List<Meal> meals)
         {
@@ -227,7 +226,7 @@ namespace FitDiaryApp
         {
             Console.WriteLine("Enter date to find all meals saved in given day!");
 
-            DateTime date = this.GetDateTime();
+            DateOnly date = this.GetDateTime();
 
             List<Meal> mealsByDate = this.mealservice.GetMealsPerDate(date);
 
@@ -246,7 +245,7 @@ namespace FitDiaryApp
         {
             Console.WriteLine("Enter date and meal type to find meals saved in given day!");
 
-            DateTime date = this.GetDateTime();
+            DateOnly date = this.GetDateTime();
             MealType mealType = this.SelectMealType();
 
             List<Meal> mealsByDate = this.mealservice.GetMealsPerDateAndMealType(date, mealType);
